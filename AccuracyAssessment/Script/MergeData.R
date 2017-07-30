@@ -1,10 +1,10 @@
-setwd('C:\\Users\\krtenneson\\Desktop\\RLCMS\\CEOMapathon\\AccuracyAssessment')
+## Pull in the CEO mapathon files.
+files = list.files(path = '.\\AccuracyAssessment\\Data\\CountryFiles', pattern="*.csv")
 
-files = list.files(pattern="*.csv")
+## Merge files into one csv.
 myfiles = do.call(rbind, lapply(files, function(x) read.csv(x, stringsAsFactors = FALSE)))
 
-head(myfiles)
-
+## Change column names before importing into EE.
 colnames(myfiles)<-c("PLOTID", "longitude", "latitude", "SIZEM", "SHAPE", 
                      "FLAGGED", "ANALYSES", "SAMPLEPOINTS", "USERID", 
                      "BUILTSURFACE", "BUILTVEGNONTREE", "BUILTTREE", "MINING", 
@@ -12,11 +12,6 @@ colnames(myfiles)<-c("PLOTID", "longitude", "latitude", "SIZEM", "SHAPE",
                      "TREEMANGROVE", "TREEOTHER", "SHRUB", "GRASS", "CROP", 
                      "AQUACULTUREPOND", "AQUATICVEGOTHER", "WATER", 
                      "SNOWICE", "UNKNOWN", "OTHER")
+
+## Export one csv.
 write.csv(myfiles, 'allPoints.csv', row.names = F)
-
-
-#######################
-plots <- myfiles[ myfiles$ANALYSES == 1,]
-head(plots)
-
-dim(plots)
